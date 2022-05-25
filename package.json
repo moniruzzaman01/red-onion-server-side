@@ -1,7 +1,6 @@
 {
   "name": "red-onion-server-side",
   "version": "1.0.0",
-  "description": "",
   "main": "index.js",
   "scripts": {
     "start": "node index.js",
@@ -13,8 +12,17 @@
   "license": "ISC",
   "dependencies": {
     "cors": "^2.8.5",
-    "dotenv": "^16.0.0",
+    "dotenv": "^16.0.1",
     "express": "^4.18.1",
     "mongodb": "^4.5.0"
-  }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/moniruzzaman01/red-onion-server-side.git"
+  },
+  "bugs": {
+    "url": "https://github.com/moniruzzaman01/red-onion-server-side/issues"
+  },
+  "homepage": "https://github.com/moniruzzaman01/red-onion-server-side#readme",
+  "description": ""
 }

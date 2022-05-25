@@ -1,6 +1,6 @@
 const express = require("express");
 const cors = require("cors");
-require("dotenv").config;
+require("dotenv").config();
 const { MongoClient, ServerApiVersion, ObjectId } = require("mongodb");
 const app = express();
 const port = process.env.PORT || 5000;
@@ -11,8 +11,7 @@ app.use(express.json());
 
 //database connection
 
-const uri = `mongodb+srv://dbuser-1:k4MmRDDyhtb7FZLN@cluster0.twequ.mongodb.net/myFirstDatabase?retryWrites=true&w=majority`;
-// console.log("user", process.env.DB_USER);
+const uri = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASS}@cluster0.twequ.mongodb.net/myFirstDatabase?retryWrites=true&w=majority`;
 const client = new MongoClient(uri, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
@@ -25,6 +24,7 @@ async function run() {
     const lunchCollection = client.db("red-onion").collection("lunch");
     const dinnerCollection = client.db("red-onion").collection("dinner");
     const cartCollection = client.db("red-onion").collection("cart");
+    const OrderCollection = client.db("red-onion").collection("orders");
 
     //get all breakfast
     app.get("/breakfast", async (req, res) => {
@@ -81,8 +81,30 @@ async function run() {
     //get cart data using email
     app.get("/cart", async (req, res) => {
       const email = req.query.email;
-      const cursor = cartCollection.find({ email });
+      const cursor = await cartCollection.find({ email });
       const result = await cursor.toArray();
+      res.send(result);
+    });
+    app.delete("/cart", async (req, res) => {
+      const email = req.query.email;
+      const result = await cartCollection.deleteMany({ email });
+      res.send(result);
+    });
+
+    app.post("/orders", async (req, res) => {
+      const order = req.body;
+      const result = await OrderCollection.insertOne(order);
+      res.send(result);
+    });
+    app.get("/orders", async (req, res) => {
+      const order = req.body;
+      const result = await OrderCollection.insertOne(order);
+      res.send(result);
+    });
+    app.get("/ordersById", async (req, res) => {
+      const id = req.query.id;
+      const query = { _id: ObjectId(id) };
+      const result = await OrderCollection.findOne(query);
       res.send(result);
     });
 
